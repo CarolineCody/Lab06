@@ -1,0 +1,101 @@
+Lab #6 Take Home
+Your name:
+Caroline Chang
+
+---------------------------------------- Question 1 Query ---------------------------------------- 
+
+SELECT ship_city,COUNT(*) as "number_of_cities" FROM orders GROUP by ship_city ORDER BY number_of_cities desc LIMIT 1;
+
+---------------------------------------- Question 1 Results ---------------------------------------- 					
+
+    ship_city   | number_of_orders
+----------------+-------------------
+ Rio de Janeiro |                34
+
+---------------------------------------- Question 2 Query ---------------------------------------- 
+
+SELECT products.prodct_name as "Products Ordered From Graz with the Lowest Quantity of Orders Shipped." FROM products INNER JOIN (SELECT * FROM order_details INNER JOIN(SELECT * FROM orders WHERE ship_city='Graz') AS grazOrders ON grazOrders.order_id = order_details.order_id ORDER BY order_details.quantity ASC LIMIT 5) AS smolOrders ON smolOrders.product_id = products.product_id;
+
+---------------------------------------- Question 2 Results ---------------------------------------- 					
+
+ Products Ordered From Graz with the Lowest Quantity Shipped.
+--------------------------------------------------------------
+Tofu
+Carnarvon Tigers
+Sir Rodney's Scones
+Mascarpone Fabioli
+Lousiana Fiery Hot Pepper Sauce
+
+---------------------------------------- Question 3 Query ---------------------------------------- 
+
+SELECT company_name FROM (SELECT company_name,COUNT(*) FROM (SELECT company_name FROM customers INNER JOIN orders ON customers.customer_id = orders.customer_id) as set GROUP BY company_name) as cluster WHERE count >= (SELECT AVG(count) FROM (SELECT company_name,COUNT(*) FROM (SELECT company_name FROM customers INNER JOIN orders ON customers.customer_id = orders.customer_id) as set GROUP BY company_name) as groupy);
+
+---------------------------------------- Question 3 Results ---------------------------------------- 					
+      company_name
+-------------------------
+Magazzini Alimentari Riuniti
+Lehmanns Markstand
+Mere Paillarde
+Rattlesnake Canyon Crocery
+Hungery Owl All-Night Gorcers
+Koniglich Essen
+Frankenversand
+Around the Horn
+Victuailles en stock
+HILARION-Abastos
+Old World Delicatessen
+LILA-Supermercado
+Godos Cocina Tipica
+Die Wandernde Kuh
+Blondesddsl pere et fils
+Ricardo Adocicodos
+La maison d'Asie
+Wartian Herkku
+Bon app'
+Berglunds snabbkop
+Sumpremes delices
+Ernst Handel
+LINO-Delicateses
+Ottilies Kaseladen
+Great Lakes Food Market
+Save-a-lot Markets
+Reggiani Caseifici
+Queen Cozinha
+QUICK-Stop
+Richter Supermarket
+Tortuga Restaurante
+Folk och fae HB
+Hanari Carnes
+Vaffeljernet
+Bottom-Dollar Markets
+B's Beverages
+White Clover Markets
+Piccolo und mehr
+Island Trading
+(39 rows)
+
+---------------------------------------- Question 4 Query ---------------------------------------- 
+
+SELECT * FROM (SELECT category_id,COUNT(*) as "product_count" FROM products GROUP BY category_id) as data WHERE product_count >= 10 ORDER BY product_count DESC;
+
+---------------------------------------- Question 4 Results ---------------------------------------- 					
+
+  catefory_id  | product_count
+---------------+----------------
+             3 |            13
+             8 |            12
+             1 |            12 
+             2 |            12
+             4 |            10
+
+---------------------------------------- Question 5 Query ---------------------------------------- 
+
+SELECT product_name FROM products WHERE ((SELECT product_id as "products_sold" FROM order_details GROUP BY product_id ORDER BY SUM(quantity) DESC LIMIT 1) = product_id);
+
+---------------------------------------- Question 5 Results ---------------------------------------- 					
+
+    product_name
+--------------------
+Camber Pierrot
+(1 row)
+
