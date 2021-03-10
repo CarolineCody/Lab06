@@ -14,7 +14,7 @@ SELECT ship_city,COUNT(*) as "number_of_cities" FROM orders GROUP by ship_city O
 
 ---------------------------------------- Question 2 Query ---------------------------------------- 
 
-SELECT products.prodct_name as "Products Ordered From Graz with the Lowest Quantity of Orders Shipped." FROM products INNER JOIN (SELECT * FROM order_details INNER JOIN(SELECT * FROM orders WHERE ship_city='Graz') AS grazOrders ON grazOrders.order_id = order_details.order_id ORDER BY order_details.quantity ASC LIMIT 5) AS smolOrders ON smolOrders.product_id = products.product_id;
+SELECT products.product_name as "Products Ordered From Graz with the Lowest Quantity of Orders Shipped." FROM products INNER JOIN (SELECT * FROM order_details INNER JOIN(SELECT * FROM orders WHERE ship_city='Graz') AS grazOrders ON grazOrders.order_id = order_details.order_id ORDER BY order_details.quantity ASC LIMIT 5) AS smolOrders ON smolOrders.product_id = products.product_id;
 
 ---------------------------------------- Question 2 Results ---------------------------------------- 					
 
